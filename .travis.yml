@@ -21,7 +21,7 @@ env:
         - secure: "B1PfxpWxW5oc4uwBlYLoLkMypDwt2fCuJ6kX732A72bl5rqxQP5qerPOXa7QxKWIaRUWMOWftT4jvaRPI14lKnEP3c1rcwvGR2lzTw01RI+JZhjEVqB3ggjQJkxxCYRxuf9A0tFXXyDIZ8jciH/pqhoAvPNuzCcMSuyr8k7lNLQ="
 
 install:
-  - pip install boto
+  - pip install boto coverage
   - "python traviscache.py -f ${TRAVIS_REPO_SLUG} -n cachepack-${TRAVIS_PYTHON_VERSION} -b travis-pip-cache -c setup.py get ${VIRTUAL_ENV}/bin/ ${VIRTUAL_ENV}/lib/python${TRAVIS_PYTHON_VERSION}/site-packages/"
   - pip install .
 
