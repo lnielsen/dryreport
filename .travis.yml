@@ -1,0 +1,35 @@
+# DEPENDS on
+#
+# TRAVIS_REPO_SLUG
+# TRAVIS_PYTHON_VERSION
+# AWS_S3_BUCKET
+# AWS_S3_ACCESS_KEY
+# AWS_S3_SECRET_KEY
+
+language: python
+
+python:
+  - "2.6"
+  - "2.7"
+  - "3.3"
+  - "3.4"
+
+env:
+    global:
+        - AWS_S3_BUCKET="travis-pip-cache"
+        - secure: "eF52lBRZu3Xx97SF7Y/aeHvtlC/67WhbIyyO3IGKrwxast1WUmJhVpYff+eCNnCdA30yUlhw5fcpVHU3mcfIOsxJq2vJQDSo5aH4mPmqWmv8HLhiRobKUOb/xhWKHmimvJsouQY62RxL7MeOSeMGUk5zR/rVVOv/qtotszehwho="
+        - secure: "B1PfxpWxW5oc4uwBlYLoLkMypDwt2fCuJ6kX732A72bl5rqxQP5qerPOXa7QxKWIaRUWMOWftT4jvaRPI14lKnEP3c1rcwvGR2lzTw01RI+JZhjEVqB3ggjQJkxxCYRxuf9A0tFXXyDIZ8jciH/pqhoAvPNuzCcMSuyr8k7lNLQ="
+
+install:
+  - pip install boto
+  - "python traviscache.py -f ${TRAVIS_REPO_SLUG} -n cachepack-${TRAVIS_PYTHON_VERSION} -b travis-pip-cache -c setup.py get ${VIRTUAL_ENV}/bin/ ${VIRTUAL_ENV}/lib/python${TRAVIS_PYTHON_VERSION}/site-packages/"
+  - pip install .
+
+script:
+  - coverage run setup.py test
+
+after_script:
+  - "python traviscache.py -f ${TRAVIS_REPO_SLUG} -n cachepack-${TRAVIS_PYTHON_VERSION} -b travis-pip-cache -c setup.py set ${VIRTUAL_ENV}/bin/ ${VIRTUAL_ENV}/lib/python${TRAVIS_PYTHON_VERSION}/site-packages/"
+
+notifications:
+  email: false
