@@ -89,12 +89,12 @@ def _checksum(args):
 
 
 def _create_cache(args, filename):
-    cmd = ["tar", "-cvfz", filename] + args.files
+    cmd = ["tar", "-cvf", filename] + args.files
     subprocess.call(cmd)
 
 
 def _extract_cache(filename):
-    cmd = ["tar", "-xzvf", filename, '-C', '/']
+    cmd = ["tar", "-xvf", filename, '-C', '/']
     subprocess.call(cmd)
 
 
